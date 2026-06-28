@@ -1,0 +1,18 @@
+# Private data — never commit raw audio or drafts (see CLAUDE.md guardrails)
+data/
+clips/
+*.wav
+*.mp3
+*.m4a
+manifest.jsonl
+*_verified.jsonl
+dataset/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kutchi Transcription Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14110d;          /* deep desert night */
+    --panel:#1d1913;
+    --panel-2:#262019;
+    --line:#3a3024;
+    --ink:#efe7d8;
+    --muted:#a99c84;
+    --faint:#6f6650;
+    --accent:#e8a33d;      /* saffron / Rann-at-dusk */
+    --accent-dim:#7a5a23;
+    --good:#7bb26a;
+    --skip:#c97a5a;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    height:100vh;display:flex;flex-direction:column;overflow:hidden;
+  }
+  .mono{font-family:"JetBrains Mono",monospace}
+  .guj{font-family:"Noto Sans Gujarati","Space Grotesk",sans-serif}
+
+  /* ---- top bar: progress is the hero ---- */
+  header{
+    display:flex;align-items:center;gap:24px;padding:14px 22px;
+    border-bottom:1px solid var(--line);background:var(--panel);
+  }
+  .brand{font-weight:700;letter-spacing:.02em;font-size:15px}
+  .brand b{color:var(--accent)}
+  .hero{display:flex;align-items:baseline;gap:8px;margin-left:auto}
+  .hero .big{font-size:30px;font-weight:700;color:var(--accent);font-family:"JetBrains Mono",monospace;line-height:1}
+  .hero .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+  .stat{display:flex;flex-direction:column;gap:2px;align-items:flex-end}
+  .stat .v{font-family:"JetBrains Mono",monospace;font-size:15px}
+  .stat .k{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
+  .bar{height:4px;background:var(--panel-2);border-radius:99px;overflow:hidden;flex:1;max-width:220px}
+  .bar i{display:block;height:100%;background:var(--accent);width:0%}
+
+  /* ---- setup screen ---- */
+  #setup{margin:auto;max-width:560px;padding:40px;text-align:center}
+  #setup h1{font-size:26px;margin:0 0 6px}
+  #setup p{color:var(--muted);line-height:1.6;font-size:14px}
+  .drop{margin-top:22px;display:grid;gap:12px;text-align:left}
+  .filerow{border:1px dashed var(--line);border-radius:var(--radius);padding:16px;background:var(--panel)}
+  .filerow .t{font-weight:600;font-size:14px}
+  .filerow .d{color:var(--faint);font-size:12px;margin-top:2px}
+  .filerow.ok{border-color:var(--good);border-style:solid}
+  input[type=file]{margin-top:10px;color:var(--muted);font-size:12px;width:100%}
+  .start{margin-top:18px;width:100%}
+
+  /* ---- main work area ---- */
+  main{flex:1;display:none;overflow:hidden}
+  .work{max-width:860px;margin:0 auto;padding:26px 24px;width:100%;display:flex;flex-direction:column;gap:18px;height:100%}
+  .clipmeta{display:flex;gap:14px;align-items:center;color:var(--faint);font-size:12px}
+  .clipmeta .id{color:var(--muted)}
+  .pill{padding:2px 9px;border:1px solid var(--line);border-radius:99px;font-size:11px}
+
+  .player{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+  .playbtn{width:46px;height:46px;border-radius:50%;border:none;background:var(--accent);color:#1a1408;font-size:18px;cursor:pointer;display:grid;place-items:center;flex:none}
+  .playbtn:active{transform:scale(.95)}
+  .scrub{flex:1;display:flex;align-items:center;gap:10px}
+  .scrub input{flex:1;accent-color:var(--accent)}
+  .time{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);min-width:84px;text-align:right}
+  .replay{background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px}
+
+  .hint{font-size:12px;color:var(--faint)}
+  .hint b{color:var(--muted);font-weight:500}
+  .draft{background:var(--panel-2);border-left:2px solid var(--accent-dim);border-radius:0 8px 8px 0;padding:10px 14px;color:var(--muted);font-size:15px;line-height:1.5}
+  .draft .tag{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+
+  label.field{display:block}
+  .field .l{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+  textarea,.txt{
+    width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    color:var(--ink);padding:14px 16px;font-size:22px;line-height:1.5;resize:none;outline:none;
+  }
+  textarea:focus,.txt:focus{border-color:var(--accent)}
+  textarea.transcript{min-height:96px}
+  .txt.roman{font-size:15px;font-family:"JetBrains Mono",monospace}
+  .notes{font-size:13px;min-height:38px}
+
+  .actions{display:flex;gap:10px;margin-top:auto;padding-top:6px}
+  button.act{flex:1;padding:14px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel-2);color:var(--ink);font-weight:600;font-size:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+  button.act small{font-weight:400;color:var(--faint);font-size:10px}
+  button.verify{background:var(--accent);color:#1a1408;border-color:var(--accent)}
+  button.verify small{color:#5a4410}
+  button.skip:hover{border-color:var(--skip)}
+  .nav{display:flex;gap:8px}
+  .nav button{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px}
+
+  footer{border-top:1px solid var(--line);padding:10px 22px;display:flex;gap:16px;align-items:center;background:var(--panel);font-size:12px;color:var(--faint)}
+  footer .keys b{color:var(--muted);font-family:"JetBrains Mono",monospace;background:var(--panel-2);padding:1px 6px;border-radius:4px;border:1px solid var(--line)}
+  footer button{margin-left:auto;background:var(--accent-dim);border:none;color:#1a1408;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer}
+  footer button+button{margin-left:8px}
+  .saved{color:var(--good)}
+  @media (max-width:640px){
+    .hero .big{font-size:22px}.work{padding:16px}.actions{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<header id="bar" style="display:none">
+  <span class="brand">Kutchi <b>Transcription Desk</b></span>
+  <div class="bar"><i id="progfill"></i></div>
+  <div class="stat"><span class="v" id="counts">0 / 0</span><span class="k">verified</span></div>
+  <div class="hero">
+    <span class="big" id="minutes">0.0</span>
+    <span class="lbl">min<br>verified</span>
+  </div>
+</header>
+
+<!-- SETUP -->
+<div id="setup">
+  <h1>Kutchi Transcription Desk</h1>
+  <p>Listen to a short clip, fix the rough draft into correct Kutchi, mark it verified.
+     Your work autosaves to this browser. Load the two things the pipeline produced:</p>
+  <div class="drop">
+    <div class="filerow" id="row-man">
+      <div class="t">1 · manifest.jsonl</div>
+      <div class="d">The file <span class="mono">ingest.py</span> wrote.</div>
+      <input type="file" id="manifestFile" accept=".jsonl,.json,.txt">
+    </div>
+    <div class="filerow" id="row-clip">
+      <div class="t">2 · the clips/ folder</div>
+      <div class="d">The folder of <span class="mono">.wav</span> clips.</div>
+      <input type="file" id="clipDir" webkitdirectory directory multiple>
+    </div>
+  </div>
+  <button class="start act verify" id="startBtn" style="display:none">Start transcribing →</button>
+  <p id="resumeNote" style="display:none;color:var(--good);font-size:13px;margin-top:14px"></p>
+</div>
+
+<!-- WORK -->
+<main>
+  <div class="work">
+    <div class="clipmeta">
+      <span class="id mono" id="clipId">—</span>
+      <span class="pill" id="clipDur">—</span>
+      <span class="pill" id="clipSrc">—</span>
+      <span style="margin-left:auto" id="posInfo">—</span>
+    </div>
+
+    <div class="player">
+      <button class="playbtn" id="playBtn">▶</button>
+      <div class="scrub">
+        <input type="range" id="seek" min="0" max="100" value="0" step="0.1">
+        <span class="time mono" id="time">0:00 / 0:00</span>
+      </div>
+      <button class="replay" id="replayBtn">↺ Replay (R)</button>
+    </div>
+
+    <div class="draft"><span class="tag">machine draft — wrong, just a starting point</span>
+      <span class="guj" id="draftText">—</span>
+    </div>
+
+    <label class="field">
+      <span class="l"><span>Correct Kutchi (Gujarati script)</span><span class="hint">type what you hear</span></span>
+      <textarea class="transcript guj" id="transcript" placeholder="…" spellcheck="false"></textarea>
+    </label>
+
+    <label class="field">
+      <span class="l"><span>Romanized (optional)</span><span class="hint">how you'd type it on a phone</span></span>
+      <input class="txt roman" id="roman" placeholder="optional" spellcheck="false">
+    </label>
+
+    <label class="field">
+      <span class="l">Notes (optional)</span>
+      <input class="txt notes" id="notes" placeholder="e.g. two speakers, background noise, unsure of one word">
+    </label>
+
+    <div class="actions">
+      <button class="act verify" id="btnVerify">✓ Verify &amp; next<small>Ctrl/⌘ + Enter</small></button>
+      <button class="act skip" id="btnSkip">⤼ Skip — unusable<small>S</small></button>
+      <button class="act skip" id="btnNon">🎵 Music / non-speech<small>M</small></button>
+      <div class="nav">
+        <button id="btnPrev">← Prev</button>
+        <button id="btnNext">Next →</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer id="foot" style="display:none">
+  <span class="keys"><b>Space</b> play · <b>R</b> replay · <b>⌘/Ctrl+↵</b> verify · <b>S</b> skip · <b>M</b> music · <b>[</b> <b>]</b> move</span>
+  <span class="saved" id="savedNote"></span>
+  <button id="exportVerified">Export verified (.jsonl)</button>
+  <button id="exportAll">Export full manifest</button>
+</footer>
+
+<audio id="audio"></audio>
+
+<script>
+const $ = id => document.getElementById(id);
+let rows = [];            // manifest rows
+let clipMap = {};         // filename -> objectURL
+let idx = 0;
+let sigKey = "kutchi_desk_default";
+
+// ---------- load ----------
+$("manifestFile").addEventListener("change", async e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const text = await f.text();
+  rows = text.split("\n").filter(l=>l.trim()).map(l=>JSON.parse(l));
+  // signature so saved progress maps to this dataset
+  sigKey = "kutchi_desk_" + (rows.length) + "_" + (rows[0]?.id||"x");
+  $("row-man").classList.add("ok");
+  mergeSaved();
+  maybeReady();
+});
+$("clipDir").addEventListener("change", e=>{
+  for(const f of e.target.files){ clipMap[f.name] = URL.createObjectURL(f); }
+  $("row-clip").classList.add("ok");
+  maybeReady();
+});
+function maybeReady(){
+  if(rows.length && Object.keys(clipMap).length){
+    $("startBtn").style.display="block";
+    const done = rows.filter(r=>r.status==="verified").length;
+    if(done>0){ $("resumeNote").style.display="block";
+      $("resumeNote").textContent = `Resuming — ${done} clip(s) already verified in this browser.`; }
+  }
+}
+$("startBtn").addEventListener("click", ()=>{
+  $("setup").style.display="none";
+  $("bar").style.display="flex"; $("foot").style.display="flex";
+  document.querySelector("main").style.display="block";
+  idx = firstPending();
+  load(idx); refreshProgress();
+});
+
+// ---------- persistence (autosave to localStorage) ----------
+function save(){
+  const slim = rows.map(r=>({id:r.id,transcript:r.transcript,roman:r.roman,status:r.status,notes:r.notes}));
+  try{ localStorage.setItem(sigKey, JSON.stringify(slim)); flashSaved(); }catch(e){}
+}
+function mergeSaved(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(sigKey)||"null");
+    if(!saved) return;
+    const byId = Object.fromEntries(saved.map(s=>[s.id,s]));
+    rows.forEach(r=>{ const s=byId[r.id]; if(s){ r.transcript=s.transcript||""; r.roman=s.roman||""; r.status=s.status||r.status; r.notes=s.notes||""; }});
+  }catch(e){}
+}
+let savedTimer;
+function flashSaved(){ $("savedNote").textContent="saved ✓"; clearTimeout(savedTimer);
+  savedTimer=setTimeout(()=>$("savedNote").textContent="",1200); }
+
+// ---------- navigation ----------
+function firstPending(){ const i = rows.findIndex(r=>r.status==="pending"); return i<0?0:i; }
+function clamp(i){ return Math.max(0, Math.min(rows.length-1, i)); }
+function load(i){
+  idx = clamp(i); const r = rows[idx];
+  $("clipId").textContent = r.id;
+  $("clipDur").textContent = (r.duration?r.duration.toFixed(1):"?")+"s";
+  $("clipSrc").textContent = (r.source_title||"").slice(0,42) || "source";
+  $("posInfo").textContent = `${idx+1} / ${rows.length}` + (r.status!=="pending"?`  ·  ${r.status}`:"");
+  $("draftText").textContent = r.asr_draft || "(no draft)";
+  $("transcript").value = r.transcript || r.asr_draft || "";
+  $("roman").value = r.roman || "";
+  $("notes").value = r.notes || "";
+  const url = clipMap[r.clip];
+  const a = $("audio");
+  if(url){ a.src = url; } else { a.removeAttribute("src"); $("draftText").textContent = "⚠ clip not found in folder: "+r.clip; }
+  $("transcript").focus();
+}
+function pull(){ const r=rows[idx]; r.transcript=$("transcript").value.trim(); r.roman=$("roman").value.trim(); r.notes=$("notes").value.trim(); }
+function go(delta){ pull(); save(); load(idx+delta); }
+function mark(status){
+  pull(); rows[idx].status=status; save(); refreshProgress();
+  // jump to next pending if any, else just next
+  const next = rows.findIndex((r,i)=>i>idx && r.status==="pending");
+  load(next<0 ? idx+1 : next);
+}
+
+$("btnVerify").onclick = ()=>{ if(!$("transcript").value.trim()){ $("transcript").focus(); return;} mark("verified"); };
+$("btnSkip").onclick   = ()=> mark("skip");
+$("btnNon").onclick    = ()=> mark("nonspeech");
+$("btnPrev").onclick   = ()=> go(-1);
+$("btnNext").onclick   = ()=> go(1);
+["transcript","roman","notes"].forEach(id=>$(id).addEventListener("input",()=>{ clearTimeout(window._t); window._t=setTimeout(()=>{pull();save();},400); }));
+
+// ---------- progress ----------
+function refreshProgress(){
+  const v = rows.filter(r=>r.status==="verified");
+  const mins = v.reduce((s,r)=>s+(r.duration||0),0)/60;
+  $("minutes").textContent = mins.toFixed(1);
+  $("counts").textContent = `${v.length} / ${rows.length}`;
+  $("progfill").style.width = (rows.length? (v.length/rows.length*100):0)+"%";
+}
+
+// ---------- audio ----------
+const audio=$("audio");
+$("playBtn").onclick = togglePlay;
+$("replayBtn").onclick = ()=>{ audio.currentTime=0; audio.play(); };
+function togglePlay(){ if(audio.paused){audio.play();} else {audio.pause();} }
+audio.addEventListener("play", ()=>$("playBtn").textContent="❚❚");
+audio.addEventListener("pause",()=>$("playBtn").textContent="▶");
+audio.addEventListener("timeupdate", ()=>{
+  if(audio.duration){ $("seek").value=(audio.currentTime/audio.duration*100);
+    $("time").textContent = fmt(audio.currentTime)+" / "+fmt(audio.duration); }
+});
+$("seek").addEventListener("input", e=>{ if(audio.duration) audio.currentTime=audio.duration*e.target.value/100; });
+function fmt(s){ s=Math.floor(s||0); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
+
+// ---------- keyboard ----------
+document.addEventListener("keydown", e=>{
+  const typing = ["TEXTAREA","INPUT"].includes(e.target.tagName);
+  if((e.metaKey||e.ctrlKey) && e.key==="Enter"){ e.preventDefault(); $("btnVerify").click(); return; }
+  if(typing && !["[","]"].includes(e.key)) {
+    if(e.key===" " && e.target.id!=="transcript"){} // allow space in text
+  }
+  if(e.code==="Space" && !typing){ e.preventDefault(); togglePlay(); }
+  if(e.key.toLowerCase()==="r" && !typing){ e.preventDefault(); audio.currentTime=0; audio.play(); }
+  if(e.key.toLowerCase()==="s" && !typing){ mark("skip"); }
+  if(e.key.toLowerCase()==="m" && !typing){ mark("nonspeech"); }
+  if(e.key==="]"){ e.preventDefault(); go(1); }
+  if(e.key==="["){ e.preventDefault(); go(-1); }
+});
+
+// ---------- export ----------
+function download(name, text){
+  const b=new Blob([text],{type:"application/json"}); const u=URL.createObjectURL(b);
+  const a=document.createElement("a"); a.href=u; a.download=name; a.click(); URL.revokeObjectURL(u);
+}
+$("exportAll").onclick = ()=>{ pull(); download("manifest.corrected.jsonl",
+  rows.map(r=>JSON.stringify(r)).join("\n")); };
+$("exportVerified").onclick = ()=>{ pull(); download("kutchi_verified.jsonl",
+  rows.filter(r=>r.status==="verified").map(r=>JSON.stringify({
+    id:r.id, clip:r.clip, duration:r.duration, transcript:r.transcript, roman:r.roman, source_id:r.source_id
+  })).join("\n")); };
+</script>
+</body>
+</html>
