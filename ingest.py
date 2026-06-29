@@ -44,7 +44,10 @@ def run(cmd):
 
 
 def slug(text, n=40):
-    text = re.sub(r"[^\w\s-]", "", text or "").strip().lower()
+    # ASCII-only: clip ids become object-storage keys / URLs for remote
+    # annotators, so keep them portable. uuid suffix guarantees uniqueness;
+    # full title is preserved in the manifest's source_title.
+    text = re.sub(r"[^a-zA-Z0-9\s-]", "", text or "").strip().lower()
     return re.sub(r"[\s_-]+", "-", text)[:n] or "src"
 
 

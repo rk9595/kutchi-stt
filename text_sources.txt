@@ -1,0 +1,6 @@
+# Kutchi TEXT-corpus sources — separate track from audio (see text_ingest.py).
+# Format: URL[<TAB>register].  register: poetry | proverb | quote | prose | unknown
+# Category URLs auto-discover posts; single-post URLs scrape just that page.
+# Text here feeds the Kutchi LM + spelling glossary, NOT the STT fine-tune.
+
+https://kutchimaadu.com/category/kutchi-poetrykutchi-quotes/	poetry
