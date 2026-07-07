@@ -43,6 +43,72 @@ def run(cmd):
     return subprocess.run(cmd, check=True, capture_output=True, text=True)
 
 
+# Gujarati -> roman draft, per spelling_convention.md Decision 6:
+# long vowels doubled (aa/ee/oo), retroflex as capitals (T Th D Dh N, L for ળ),
+# aspirates add h. Implosives (bb/dd) can't be heard by a script — human's job.
+GUJ_CONSONANTS = {
+    "ક": "k", "ખ": "kh", "ગ": "g", "ઘ": "gh", "ઙ": "ng",
+    "ચ": "ch", "છ": "chh", "જ": "j", "ઝ": "jh", "ઞ": "n",
+    "ટ": "T", "ઠ": "Th", "ડ": "D", "ઢ": "Dh", "ણ": "N",
+    "ત": "t", "થ": "th", "દ": "d", "ધ": "dh", "ન": "n",
+    "પ": "p", "ફ": "ph", "બ": "b", "ભ": "bh", "મ": "m",
+    "ય": "y", "ર": "r", "લ": "l", "વ": "v",
+    "શ": "sh", "ષ": "sh", "સ": "s", "હ": "h", "ળ": "L",
+}
+GUJ_VOWELS = {
+    "અ": "a", "આ": "aa", "ઇ": "i", "ઈ": "ee", "ઉ": "u", "ઊ": "oo",
+    "એ": "e", "ઍ": "e", "ઐ": "ai", "ઓ": "o", "ઑ": "o", "ઔ": "au", "ઋ": "ru",
+}
+GUJ_MATRAS = {
+    "ા": "aa", "િ": "i", "ી": "ee", "ુ": "u", "ૂ": "oo",
+    "ે": "e", "ૅ": "e", "ૈ": "ai", "ો": "o", "ૉ": "o", "ૌ": "au", "ૃ": "ru",
+}
+GUJ_SIGNS = {"ં": "n", "ઁ": "n", "ઃ": "h"}
+GUJ_DIGITS = {chr(0x0AE6 + i): str(i) for i in range(10)}
+VIRAMA = "્"
+
+
+def dev_to_guj(text):
+    # Whisper sometimes emits Devanagari despite language="gu". The blocks are
+    # parallel: shift U+0900->U+0A80. Danda has no Gujarati use here -> ".".
+    out = []
+    for c in text:
+        cp = ord(c)
+        if cp in (0x0964, 0x0965):
+            out.append(".")
+        elif 0x0901 <= cp <= 0x0963 or 0x0966 <= cp <= 0x096F:
+            out.append(chr(cp + 0x180))
+        else:
+            out.append(c)
+    return "".join(out)
+
+
+def guj_to_roman(text):
+    out = []
+    chars = list(text)
+    i = 0
+    while i < len(chars):
+        c = chars[i]
+        if c in GUJ_CONSONANTS:
+            out.append(GUJ_CONSONANTS[c])
+            nxt = chars[i + 1] if i + 1 < len(chars) else ""
+            if nxt in GUJ_MATRAS:
+                out.append(GUJ_MATRAS[nxt])
+                i += 2
+                continue
+            if nxt == VIRAMA:
+                i += 2
+                continue
+            # inherent 'a', dropped word-finally (Gujarati habit)
+            if nxt in GUJ_CONSONANTS or nxt in GUJ_VOWELS or nxt in GUJ_SIGNS:
+                out.append("a")
+            i += 1
+            continue
+        out.append(GUJ_VOWELS.get(c) or GUJ_SIGNS.get(c) or GUJ_DIGITS.get(c) or c)
+        i += 1
+    return "".join(out)
+
+
 def slug(text, n=40):
     # ASCII-only: clip ids become object-storage keys / URLs for remote
     # annotators, so keep them portable. uuid suffix guarantees uniqueness;
@@ -86,7 +152,7 @@ def transcribe_segments(wav_path, model):
         beam_size=5,
     )
     for s in segments:
-        yield s.start, s.end, (s.text or "").strip()
+        yield s.start, s.end, dev_to_guj((s.text or "").strip())
 
 
 def cut_clip(src_wav, start, end, dst_wav):
@@ -140,8 +206,11 @@ def main():
     print(f"[i] loading whisper '{args.model}' on {device} ({compute})", file=sys.stderr)
     model = WhisperModel(args.model, device=device, compute_type=compute)
 
-    urls = [l.strip() for l in Path(args.urls).read_text(encoding="utf-8").splitlines()
-            if l.strip() and not l.strip().startswith("#")]
+    urls = []
+    for l in Path(args.urls).read_text(encoding="utf-8").splitlines():
+        l = l.split("#", 1)[0].strip()   # inline comments too, not just full-line
+        if l:
+            urls.append(l)
     done = load_done_sources(manifest_path)
 
     n_clips = 0
@@ -173,7 +242,7 @@ def main():
                             "asr_draft": draft,                # Gujarati-script guess; TO BE CORRECTED
                             "asr_model": f"faster-whisper-{args.model}/gu",
                             "transcript": "",                  # filled by human
-                            "roman": "",                       # optional romanized, filled by human
+                            "roman": guj_to_roman(draft),      # auto draft; human corrects with transcript
                             "status": "pending",               # pending|verified|skip|nonspeech
                             "notes": "",
                         }

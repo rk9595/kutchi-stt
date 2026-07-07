@@ -257,6 +257,37 @@ let savedTimer;
 function flashSaved(){ $("savedNote").textContent="saved ✓"; clearTimeout(savedTimer);
   savedTimer=setTimeout(()=>$("savedNote").textContent="",1200); }
 
+// ---------- auto-roman (mirror of guj_to_roman in ingest.py, Decision 6) ----------
+const GJ_C={"ક":"k","ખ":"kh","ગ":"g","ઘ":"gh","ઙ":"ng","ચ":"ch","છ":"chh","જ":"j","ઝ":"jh","ઞ":"n",
+"ટ":"T","ઠ":"Th","ડ":"D","ઢ":"Dh","ણ":"N","ત":"t","થ":"th","દ":"d","ધ":"dh","ન":"n",
+"પ":"p","ફ":"ph","બ":"b","ભ":"bh","મ":"m","ય":"y","ર":"r","લ":"l","વ":"v",
+"શ":"sh","ષ":"sh","સ":"s","હ":"h","ળ":"L"};
+const GJ_V={"અ":"a","આ":"aa","ઇ":"i","ઈ":"ee","ઉ":"u","ઊ":"oo","એ":"e","ઍ":"e","ઐ":"ai","ઓ":"o","ઑ":"o","ઔ":"au","ઋ":"ru"};
+const GJ_M={"ા":"aa","િ":"i","ી":"ee","ુ":"u","ૂ":"oo","ે":"e","ૅ":"e","ૈ":"ai","ો":"o","ૉ":"o","ૌ":"au","ૃ":"ru"};
+const GJ_S={"ં":"n","ઁ":"n","ઃ":"h"}, GJ_VIRAMA="્";
+function gujToRoman(text){
+  const ch=[...text], out=[];
+  for(let i=0;i<ch.length;i++){
+    const c=ch[i];
+    if(GJ_C[c]){
+      out.push(GJ_C[c]);
+      const n=ch[i+1]||"";
+      if(GJ_M[n]){ out.push(GJ_M[n]); i++; continue; }
+      if(n===GJ_VIRAMA){ i++; continue; }
+      if(GJ_C[n]||GJ_V[n]||GJ_S[n]) out.push("a");
+      continue;
+    }
+    if(/[૦-૯]/.test(c)){ out.push(String(c.charCodeAt(0)-0x0AE6)); continue; }
+    out.push(GJ_V[c]||GJ_S[c]||c);
+  }
+  return out.join("");
+}
+// roman follows the transcript automatically until the annotator edits roman by hand
+let romanTouched=false;
+function syncRoman(){ if(!romanTouched) $("roman").value = gujToRoman($("transcript").value); }
+$("roman").addEventListener("input", ()=>{ romanTouched=true; });
+$("transcript").addEventListener("input", syncRoman);
+
 // ---------- navigation ----------
 function firstPending(){ const i = rows.findIndex(r=>r.status==="pending"); return i<0?0:i; }
 function clamp(i){ return Math.max(0, Math.min(rows.length-1, i)); }
@@ -269,6 +300,9 @@ function load(i){
   $("draftText").textContent = r.asr_draft || "(no draft)";
   $("transcript").value = r.transcript || r.asr_draft || "";
   $("roman").value = r.roman || "";
+  // hand-edited roman (≠ auto of current text) stays; otherwise it tracks the transcript
+  romanTouched = !!r.roman && r.roman !== gujToRoman($("transcript").value);
+  syncRoman();
   $("notes").value = r.notes || "";
   const url = clipMap[r.clip];
   const a = $("audio");

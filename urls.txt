@@ -20,3 +20,8 @@ https://www.youtube.com/watch?v=Wd4jX12Or4A   # Kutchi vlogs - Bhuj places (11:0
 # --- longer single-speaker (gold for STT, but heavy to draft on CPU) ---
 https://www.youtube.com/watch?v=PvA6eYiV-po   # Vasant Maraj - mure ja viya (24:42)
 https://www.youtube.com/watch?v=Eg5tUArUuL4   # Kutchi Kalrav - Mahipat stage talk (51:47)
+
+# --- Being Kutchi teaching shorts (owner gave permission + will help annotate) ---
+# 19 shorts x ~15-25s (~6-7 min total). Clean scripted phrases, code-mixed with
+# English/Hindi framing. No manual subs on YT (auto-captions only, mis-detected hi/en).
+https://www.youtube.com/channel/UCtgtHaOdaod8dnjkGYtXPhg/shorts
