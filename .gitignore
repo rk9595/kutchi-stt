@@ -17,3 +17,7 @@ __pycache__/
 
 # OS / editor
 .DS_Store
+
+# Kutchi-GPT corpora, tokenizer, shards, checkpoints (large, local-only)
+data_lm/
+lm/**/checkpoints/

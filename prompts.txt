@@ -1,0 +1,43 @@
+# Kutchi read-speech prompts — Option A (you write the prompt, then read it).
+# Format: <Gujarati-script transcript><TAB><optional roman>
+# Lines starting with # are ignored. Add your own lines below; seeded from verified.jsonl.
+આજ કાર્યકમ મેં બોરી માજા અચી વાય	aj karyakam me bori maja achi vayi
+મુકે બોરી મજા અચી વાય	muke bori majja achi vayi
+તે શૂરજાએ, ભીવોચે ચંદર આએચ, ઇંકરીન વેડ્યા,	che suraj aye ne byo che chandra aye, ee karine vedya
+યેડા પ્રમુખ સાહેબ ઝેડા દયા માડુ નેકર્યા હે યેની કે પોહચો	yeda pramukh saheb jheda daya madu nekrya he yeni ke pohcho
+કે ઔં સુરજ આયાં કી ચંદર આયે છે ઔં હેન ગંજે જો નહિ આયાં	ke aun suraj ayain ki chandar aye che aaun hen ganje jo nhi ayian
+છે અમુખ મુકે ખબર નાયે તડે વન ભા વંજે	ceh amukh muke khabar naye tade van bha vanje
+લમી લમી આલ કરે, કુત્ટે જહ્ડો વાલ કરે, પુષ્મત દમાલ કરે ગંજે કે ગજાએ તો,	lami lami vat kare, kotte jedo val kare, pohcho ta dhamal kare ganje ke gajaye to
+રડજા રામી ઇચે, કિકપ્યા મોડ્લી ઇચે, જોકો અચે તે કે વર વાલ સે બિરાયે તો,	har ja harami achen, kayik pya mavali ache, joko ache teken vade val se veray toh
+કછી તા કચ સે મરા ભાપ, કચ ને ઉંદે દી વાઞ્ઝી ન તો ચક ઠાએ,	ye toh kutchh che mara baap, kutchh ke undo thi vachaye ne toh chukkh thaye
+અને ભલ ભલા ને ચક્કખ કરી દે યેનો નામાછ કચ્છ કે વાયે, અને યેટલા માટે કવિ કારણે લેખે કી આજ જી પિઢે ને ખબર ના હોયે પ્રમુખ સાહેબ કી પાંજો કચ્છ કિન વો ઈ ઝબર નહિ વે	ane bhal bhala ne chakkh kari de yeno namachh kutchh ke vaaye, ane yetla mate kavi karane lekhe ki ajj ji pidhe ne khabar na hoye pramukh saheb ki paanjo kutch kin vo ee jhabar nhi ve
+યે તો આ વાંતા યે ઘણી વાંધા, તુ તો ઊઢકે તોને	ye toh aa vaata ye gani vandha, tu toh oodhke tone
+તેર દુલાની કે તાયા તી તેમ નુવ ગોત તાન હૈ?	tel dulani thi je tayar thi ye toh yenke ghoto tan ne
+એ, ગોત ના હૈ, હેવર ખોરા ખબર હૈ, આજ જા માને જો ચોક્રોં તાયાર વાદારે થી, તુ મૈક ગબ ને કરી હૈં?	ye, got naye, hevar kor aye khabar aye, aaj je jamane ja chokra taayar vadhere thi ye toh makeup ne kariyen tha,
+જીઓર લાકે જોવા આંતે એંજા તો મુરી તીથા તુગ કા સો લાકે તો મુરા,	hero lagen toh, muri thi tah tu khaso lagen toh mura
+ઉને આઁને મુદી સેર્ષી કઈંદ વો સેર્ષી,	ne aun ne mudi selfie ganbo selfie
+તે ફેસબુક તે વજ્જા, અપલોડ કરો અપલોડ	te facebook te vajja, upload karo uplaod
+adomo  verschied собственно what do you intend to do here?	ye banevi ji gal na rakha je, aaj jamane ji chokri aayiyun ne , ee toh tojjo banevi aye , ajj je jamane ji chokri uun ne penje maytri ji ye nathi rakhen
+હણે હેંટી આયે ને વિયાં ના કરજે, હું આયે ને સાઠ પાંસઠ વારે જો આયે, ને તુ કેટલી આયિયેં પોતર નેર્તા ખરી	hane henti aye ne viyan na karaje,hun aye ne sath pasaath vare jo aye, ne tu ketli ayiyen potar nerta khari
+પણ બનેવી જી ગાલ મુકે રાખી નિજ ખપે, અરે છોકરી તુ ના સમજાઈ ને મુજી ગાલ, હોણજી ગાલ છોડ, ને પૈસા ટક્કે જી તોકે જરૂરત આયે ને, તા પૈસા ટક્કા ઔં ધીંદોસ, અને તુ હેકડો કામ કર મુજી ગાલ સાંભળ	pan banevi ji ghal muke rakhi nij khape, are chokri tu na samjayi ne muji gaal , honji ghal chaad,ne paisa takke ji toke jarurart aye ne, ta paisa takka aun dhindos, ane tu hekdo kam kar muji gaal sounn
+ભલા, ભલા હણે ઔં વનતો, હણે તોકે ચોય હી, તોજે રીતે ભજી વનજ હણ	bhala, bhala hane aaun vanato,hane toke choy hi, toje rithe bhaji vanaj han
+અને સમજી ગન ને કે ઉડ઼ા રાર પે, કે ખેને આ પદ્રા આયો, અને તૂન ને.	ane samji gan ne ki oote rad pe , ke kene padrayo, ane tu dene
+ઔં તોકે સાલા દિયાં તો બેકાં કે ના દિયા	aaun toke saala diyan toh bekan ke na diya
+હાં, બરાબર હણે ઔં વનતો	han, barabor hane aaun vanato
+સચ્ચિ ગાલા બસી જી, હન તી વિયાન નો કર આજે,	saachi gaal aye bassi ji, hen this viyan na karaje
+કિન આયિયું કચ્છી માડુ, ઔં અંજો દોસ્ત અલ્તાફ ગજન, આજ ઔં વનતો ભુજ, ઓગેન ઝો વેલો ઊઠી કરીને મુકે વેલો વન નું આયે બસ સ્ટેન્ડ તે કલાક સાત વાગે અચીંદી ઓટ્ટે બસ, વજેન્તા સાડા છ, તા વીડિયો મેં બનાવી રોજ્જા, આજ આંકે ઈ વીડિયો મેં ભુજ ફેરણી આ તો	kin ayiyon kutchi madu, aaun anjo dost altaf gajan, aaj aaun vanato bhuj , oogen jho velo othi karine muke velo van nu aye bus stand te kolak saatt vage achindi otte bus, vajenta saada cha, ta video me banayi rojja,aj aanke ee video me bhuj feranyi aa toh
+ઈ આસાંજે ગામ જો બસ સ્ટેન્ડ	ee aasanje gham jo bus stand
+હોંડા સે હોકિંગ કરલે નેકર્યો વ્યોં સે	honda se hawking karle nekryo vyon se
+કી જરૂર વિઝિટ કયી જા મુસ્કાન સીટ કવર ભુજ કચ્છ	ki jarur visit kayi ja muskan seat cover bhuj kutchh
+મસ્ત સીટું બનાવી યેંતા ગાડી જી	mast seatun banayi yenta gaadi ji
+આઁસા દેગતરં આએ ગ઼નેક સરવ એર।	comment me jarur chojan, ayian comment kayi ja ki hen dungar mathe
+સજ્જો ભુજ હ્યાંથી દેખા જે તો	sajjo bhuj hyanthi dekha je toh
+યે આયે ભુજી ડુંગર, હાલબો હણે	ye aye bhuji dungar, halbo hane
+ઇં નરન્ર મુદી જારત કૈં, કચ નહીં દેખા, તો કુચ નહીં દેખા	ee narendra modi jayret ken ne ki, kutchh nhi dekha toh kuch nhi dekha,
+મુઝે જીવ જાસોં, ઇત્રા ગોરી આજેં તા થેલા ખની ને	mujje jiv ja saun yetra goriyan achenta thela ghani ne
+પેંધ નેંધા થેલા વધા વેંતા	pendh nendha thela vadha venta
+પણ ઘણાં માડુ ધરમ જો દેખાવો કરિયેં ભલા, ચેક દિયેં ને ઈ પણ ધરમ જી ચેક ખબર આયે, ચેક સીતારામ	pan ghane madu dharam jo dekhavo kariyen bhala, chekk diyen ne ee pan dharam ji chekk khabar aye, chekk sitaram
+ચેક માતાજી, વિદેહ મેં ચેક દિયેં તાં પાંખે ઘેલ ઘેલાયિયાં થાયે	cheek mataji, videh me cheek diyen tan paankhe ghel ghelayian thiyen
+હાં ને માડિયા પેલા તા નેરો ઔં કચ્છી માડુ આયાં સાવ દેશી માડુ આયાં યેટલે જોર થી ખેલજા, જોર થી તાડિયું વજાઈ જા, જોક્કો ના ખેલેં હેંજો કડે ભરોસો ના કેજા	haan ne madiya pela ta nero aaun kutchi madu ayian sav desi maadu ayian yetle jor thi khelja , jor this tadiyun vajai ja, jokko na khelen henjo kade bharoso na keyja
+મુકે તો કેથી આસી લેડીઝ મારી વાનો તહ, તા ઔં ચ્યો વાંદરો, તા મુજી વાયુ તી કરેં આકેં કેડા જવાબ	muke toh kethi asi ladies mari vano tah , ta aaun chyo vandro , ta muji vayu ti karen aaken keda jawab
+ને અસાં કે યેથે વાંદરો ને ઓથે યે વાંદરો	ne asan ke yethe vandro ne othe ye vandro

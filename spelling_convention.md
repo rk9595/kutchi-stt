@@ -1,5 +1,12 @@
 # Kutchi Spelling & Transcription Convention — Bhuj dialect, Gujarati script
 
+> **Executable form:** `data/lexicon.tsv` + `lexicon.py` encode the logged-decisions
+> table below as code; every machine-written transcript passes through
+> `Lexicon.normalize()`. When a new decision lands in the table here, add the same
+> row to lexicon.tsv (both are append-only). Since the 2026-07-19 automation pivot
+> there is no human annotator lead — the lexicon is the ratifier; genuinely open
+> calls go to the project owner.
+
 **Version 0.1 (draft — must be ratified by the native-speaker lead).**
 Target: Bhuj-region Kutchi, written in modified Gujarati script, for the STT/LLM dataset.
 
@@ -158,5 +165,13 @@ their first clip — examples teach the convention faster than rules do.
 
 | date | word / case | decision | reason |
 |---|---|---|---|
-| | IMPLOSIVE POLICY | Option __ | ratified by ___ |
-| | | | |
+| 2026-07-18 | IMPLOSIVE POLICY | Option A (plain) | locked in CLAUDE.md; Kutchi Sahitya Academy sign-off still pending |
+| 2026-07-18 | verb ending -nu / -inu (venanu, achinu, somnu, lekhnu) | → -નૂ (long ū final) | preserved final long vowel (D3). DRAFT from card harvest — ratify |
+| 2026-07-18 | copula "aay" (is/are) | → આય | one spelling across all 111 harvested cards. DRAFT — ratify |
+| 2026-07-18 | dative pronouns muke / toke / tonke / munke | → મુકે / તોકે / તોંકે / મુંકે | fused clitic pronouns (D5). DRAFT — ratify |
+| 2026-07-18 | possessives tonjo / mujo / asanjo / panjo | → તોંજો / મુજો / અસાંજો / પાંજો | nasal = anusvara (D4). DRAFT — ratify |
+| 2026-07-18 | subject pronouns aau / aai / tu | → આઉ / આઈ / તૂ | vowel-length call. DRAFT — ratify |
+| 2026-07-18 | interrogatives + present aux: kor / keda / to / ta | → કોર / કેડા / તો / તા | DRAFT — ratify |
+| 2026-07-18 | loanwords bazaar / photo / dabeli | → બજાર / ફોટો / દાબેલી | code-switch transliterate (D7); plain letters, no nukta (D2). DRAFT — ratify |
+| 2026-07-18 | OPEN: "Get up" (phrasebook id 17) | (?) — Kutchi was off-frame in source card | re-check video or native supplies |
+| 2026-07-18 | OPEN: "Rabbit" (phrasebook id 68) | (?) — no Kutchi term on the card (only Gujarati ससलुं) | native supplies Kutchi word |

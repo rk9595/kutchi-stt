@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=C5yCbONZf2Y   # Geeta Rabari learning Kutchi (2:
 https://www.youtube.com/watch?v=tWrp9VagFMs   # Kutchi Maadu comedy recording (6:24)
 https://www.youtube.com/watch?v=niM_d6lHMCI   # Kutchi Kalakar - Rasik Maraj 2 (10:48)
 https://www.youtube.com/watch?v=6f927KYDKjI   # Kutchi Kalakar - Rasik Maraj (12:38)
-https://www.youtube.com/watch?v=xfkqaDJunjw   # Rajesh Gadhvi Kutchi jokes (12:58)
+https://www.youtube.com/watch?v=xfkqaDJunjw   # Rajesh Gadhvi (12:58) — WARNING 2026-07-19: narration is Gujarati (Kadu Makrani lok-varta), not Kutchi; machine-verify skips most clips. Pilot's 0.7 human-verified min from this source deserve a re-look.
 https://www.youtube.com/watch?v=u2xZGHWKLjI   # Vasant Maraj - Mureke Memaan (18:10)
 
 # --- vlogs (Bhuj, Kutchi narration) ---
@@ -25,3 +25,15 @@ https://www.youtube.com/watch?v=Eg5tUArUuL4   # Kutchi Kalrav - Mahipat stage ta
 # 19 shorts x ~15-25s (~6-7 min total). Clean scripted phrases, code-mixed with
 # English/Hindi framing. No manual subs on YT (auto-captions only, mis-detected hi/en).
 https://www.youtube.com/channel/UCtgtHaOdaod8dnjkGYtXPhg/shorts
+
+# --- Kshama Rajgor "Learn Kutchi through English" (added 2026-07-20) ---
+# Card-style: numbered English phrase + romanized Kutchi, multiple register variants
+# per card (male/female/younger-to-elder). Confirmed Kutchi audio, matches lexicon.
+# Track A: harvested 24 cards -> 35 aligned clips, 1.9 verified min.
+https://www.youtube.com/watch?v=BeByk-Qzmv8   # Learn Kutchi through English (5:14)
+
+# --- Jagdish Vaghela "Learn Kutchi" course playlist (added 2026-07-07) ---
+# 18 videos, ~115 min. Instructional: teacher frames in Gujarati/Hindi, then gives
+# the Kutchi phrase. Heavily code-mixed -> annotator keeps the Kutchi, drops framing.
+# Whisper-small drafts come out romanized/English on this content; seed only.
+https://www.youtube.com/playlist?list=PLpdbD90_IL2m2P1-sk-JzRJikrAXMTTRA
